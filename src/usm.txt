@@ -1,0 +1,14 @@
+void CImageProcessClass::sharpenUSM(Mat src, Mat &_dst)
+{
+	double sigma = 3;  
+	int threshold = 0;  
+	float amount = 1;  
+	
+	Mat imgBlurred;
+	GaussianBlur(src, imgBlurred, Size(), sigma, sigma);  
+	Mat lowContrastMask = abs(src-imgBlurred)<threshold;  
+	imwrite("D:\\res1.jpg", lowContrastMask);  
+	_dst = src*(1+amount)+ imgBlurred*(-amount);  
+	src.copyTo(_dst, lowContrastMask);  
+	imwrite("D:\\res.jpg", _dst);  
+}
